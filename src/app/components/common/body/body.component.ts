@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { CardModule } from 'primeng/card';
+
 @Component({
   selector: 'app-body',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, CardModule],
   templateUrl: './body.component.html',
-  styleUrls: ['./body.component.scss']
+  styleUrls: ['./body.component.scss'],
 })
-export class BodyComponent {
-
-}
+export class BodyComponent {}

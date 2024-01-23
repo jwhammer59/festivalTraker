@@ -1,26 +1,24 @@
 <div *ngIf="this.auth.currentUser">
   <p-menubar [model]="loggedInItems">
     <ng-template pTemplate="end">
-      <div>
+      <div class="mt-3">
         <span class="mr-2">
-          <a href="home">
-            <div class="flex align-items-center">
-              <div>
-                <h2 class="uppercase">Festival Scheduler Pro</h2>
-              </div>
-              <div>
-                <img
-                  class="ml-2"
-                  [ngStyle]="{ width: '50px', height: '40px' }"
-                  src="assets/FSP_Logo_Letters.png"
-                />
-              </div>
+          <div class="flex align-items-center">
+            <div>
+              <span>{{ loggedInUser }}</span>
             </div>
-          </a>
+            <div>
+              <img
+                class="ml-2"
+                [ngStyle]="{ width: '50px', height: '40px' }"
+                src="assets/FSP_Logo_1.png"
+              />
+            </div>
+          </div>
         </span>
-        <div class="flex justify-content-end">
+        <!-- <div class="flex justify-content-end">
           <span>{{ loggedInUser }}</span>
-        </div>
+        </div> -->
       </div>
     </ng-template>
   </p-menubar>
@@ -40,7 +38,7 @@
                 <img
                   class="ml-2"
                   [ngStyle]="{ width: '50px', height: '40px' }"
-                  src="assets/FSP_Logo_Letters.png"
+                  src="assets/FSP_Logo_1.png"
                 />
               </div>
             </div>

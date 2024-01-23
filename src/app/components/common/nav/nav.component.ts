@@ -62,7 +62,7 @@ export class NavComponent implements OnDestroy {
         {
           label: 'Add Volunteer',
           icon: 'pi pi-fw pi-user-plus',
-          routerLink: ['add-user'],
+          routerLink: ['add-volunteer'],
         },
       ],
     },

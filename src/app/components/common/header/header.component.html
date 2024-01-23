@@ -1,1 +1,23 @@
-<p>header works!</p>
+<p-toolbar
+  styleClass="bg-blue-900 shadow-8 mt-2 py-0"
+  [style]="{
+    'border-radius': '3rem',
+    'background-image':
+      'linear-gradient(to right, var(--primary-500), var(--primary-800))',
+
+  }"
+>
+  <ng-template pTemplate="start">
+    <img width="50px" height="40px" src="assets/FSP_Logo_1.png" alt="" />
+  </ng-template>
+  <ng-template pTemplate="center">
+    <h3 class="text-white text-3xl">{{ title }}</h3>
+  </ng-template>
+  <ng-template *ngIf="buttonVisible" pTemplate="end">
+    <button
+      class="p-link inline-flex justify-content-center align-items-center text-white h-3rem w-3rem border-circle hover:bg-white-alpha-10 transition-all transition-duration-200"
+    >
+      <i class="{{ buttonIcon }} text-2xl" (click)="addNew()"></i>
+    </button>
+  </ng-template>
+</p-toolbar>
