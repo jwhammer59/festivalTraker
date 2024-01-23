@@ -1,6 +1,6 @@
 <p-toast></p-toast>
 <div class="flex justify-content-center mt-4">
-  <p-card class="shadow-5" [style]="{ width: '25rem' }">
+  <p-card styleClass="shadow-5 bg-blue-100" [style]="{ width: '25rem' }">
     <ng-template pTemplate="header">
       <div class="flex justify-content-center">
         <h2>
@@ -64,14 +64,14 @@
 
         <div class="flex justify-content-center col-12">
           <div>
-            <button
-              pButton
+            <p-button
               icon="pi pi-sign-in"
-              class="p-button-outlined p-button-success"
+              [raised]="true"
+              severity="success"
               label="Login"
               type="submit"
               value="Submit"
-            ></button>
+            ></p-button>
           </div>
         </div>
       </div>

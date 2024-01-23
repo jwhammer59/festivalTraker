@@ -6,13 +6,13 @@ import { ButtonModule } from 'primeng/button';
 import { PrimeNGConfig } from 'primeng/api';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-welcome',
   standalone: true,
   imports: [CommonModule, ButtonModule],
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  templateUrl: './welcome.component.html',
+  styleUrls: ['./welcome.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class WelcomeComponent implements OnInit {
   constructor(
     private ngZone: NgZone,
     private router: Router,
@@ -23,9 +23,9 @@ export class HomeComponent implements OnInit {
     this.primengConfig.ripple = true;
   }
 
-  goToEvents() {
+  goToLogin() {
     this.ngZone.run(() => {
-      this.router.navigate(['events']);
+      this.router.navigate(['login']);
     });
   }
 }

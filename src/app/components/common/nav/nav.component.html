@@ -1,1 +1,55 @@
-<p-menubar [model]="items"></p-menubar>
+<div *ngIf="this.auth.currentUser">
+  <p-menubar [model]="loggedInItems">
+    <ng-template pTemplate="end">
+      <div>
+        <span class="mr-2">
+          <a href="home">
+            <div class="flex align-items-center">
+              <div>
+                <h2 class="uppercase">Festival Scheduler Pro</h2>
+              </div>
+              <div>
+                <img
+                  class="ml-2"
+                  [ngStyle]="{ width: '50px', height: '40px' }"
+                  src="assets/FSP_Logo_Letters.png"
+                />
+              </div>
+            </div>
+          </a>
+        </span>
+        <div class="flex justify-content-end">
+          <span>{{ loggedInUser }}</span>
+        </div>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>
+
+<div *ngIf="!this.auth.currentUser">
+  <p-menubar [model]="loggedOutItems">
+    <ng-template pTemplate="end">
+      <div>
+        <span class="mr-2">
+          <a href="home">
+            <div class="flex align-items-center">
+              <div>
+                <h2 class="uppercase">Festival Scheduler Pro</h2>
+              </div>
+              <div>
+                <img
+                  class="ml-2"
+                  [ngStyle]="{ width: '50px', height: '40px' }"
+                  src="assets/FSP_Logo_Letters.png"
+                />
+              </div>
+            </div>
+          </a>
+        </span>
+        <div class="flex justify-content-end">
+          <span>{{ loggedInUser }}</span>
+        </div>
+      </div>
+    </ng-template>
+  </p-menubar>
+</div>

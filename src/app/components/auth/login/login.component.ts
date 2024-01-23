@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       if (aUser) {
         this.loggedInUserID = aUser.email;
-        this.router.navigate(['home']);
+        this.router.navigate(['/']);
       }
     });
   }
@@ -95,7 +95,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           detail: 'Congratulations you are logged in!',
           life: 3000,
         });
-        this.router.navigate(['home']);
+        this.router.navigate(['/']);
       })
       .catch(() => {
         this.messageService.add({

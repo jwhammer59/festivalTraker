@@ -68,7 +68,7 @@ export class NavComponent implements OnDestroy {
     },
     {
       label: 'Shifts',
-      icon: 'pi pi-fw pi-list',
+      icon: 'pi pi-fw pi-stopwatch',
       items: [
         {
           label: 'Shifts List',
@@ -108,7 +108,7 @@ export class NavComponent implements OnDestroy {
     this.loggedInUser = '';
     this.loggedInStatus = false;
     this.authService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['welcome']);
   }
 
   ngOnDestroy(): void {
