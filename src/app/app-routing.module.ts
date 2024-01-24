@@ -42,6 +42,38 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'groups',
+    loadComponent: () =>
+      import('./components/pages/groups/groups.component').then(
+        (m) => m.GroupsComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'add-group',
+    loadComponent: () =>
+      import('./components/pages/groups/add-group/add-group.component').then(
+        (m) => m.AddGroupComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'edit-group/:id',
+    loadComponent: () =>
+      import('./components/pages/groups/edit-group/edit-group.component').then(
+        (m) => m.EditGroupComponent
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'group-details/:id',
+    loadComponent: () =>
+      import(
+        './components/pages/groups/group-details/group-details.component'
+      ).then((m) => m.GroupDetailsComponent),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'volunteers',
     loadComponent: () =>
       import('./components/pages/volunteers/volunteers.component').then(

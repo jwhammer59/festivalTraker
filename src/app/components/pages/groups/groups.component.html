@@ -1,0 +1,108 @@
+<p-toast></p-toast>
+<app-header
+  [title]="headerTitle"
+  [icon]="headerIcon"
+  [buttonTitle]="buttonTitle"
+  [buttonIcon]="buttonIcon"
+  [buttonVisible]="buttonVisible"
+  (buttonAction)="addNewGroup()"
+></app-header>
+
+<app-body>
+  <div class="flex justify-content-center">
+    <p-table
+      *ngIf="allGroups$ | async as groups"
+      [style]="{ width: '85vw' }"
+      #dt
+      styleClass="p-datatable-sm mt-2"
+      [value]="groups"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [globalFilterFields]="['name']"
+      [rowHover]="true"
+      dataKey="id"
+      selectionMode="single"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-start">
+          <p-avatar
+            icon="pi pi-id-card"
+            styleClass="mr-2"
+            shape="circle"
+            [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
+          ></p-avatar>
+          <div class="mr-3">Groups Table</div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            Group Name<p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th>
+            <div class="flex justify-content-center">Actions</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-group | async>
+        <tr>
+          <td>
+            {{ group.name }}
+          </td>
+          <td>
+            <div class="flex justify-content-center">
+              <p-checkbox
+                [(ngModel)]="group.isActive"
+                [binary]="true"
+                inputId="binary"
+                [disabled]="true"
+              ></p-checkbox>
+            </div>
+          </td>
+          <td>
+            <div class="flex justify-content-center">
+              <p-button
+                [text]="true"
+                severity="warning"
+                label="Edit"
+                icon="pi pi-fw pi-pencil"
+                (onClick)="editGroup(group.id)"
+              ></p-button>
+              <p-button
+                [text]="true"
+                label="Delete"
+                severity="danger"
+                icon="pi pi-fw pi-trash"
+                (onClick)="deleteGroup(group.id)"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No data found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total Number of Groups:
+          {{ groups ? groups.length : 0 }}
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</app-body>
+
+<!-- Begin Confirmation Dialog -->
+<p-confirmDialog
+  [style]="{ width: '50vw' }"
+  [baseZIndex]="10000"
+  rejectButtonStyleClass="p-button-text"
+  acceptButtonStyleClass="p-button-text p-button-danger"
+  defaultFocus="reject"
+></p-confirmDialog>
+<!-- End Confirmation Dialog -->

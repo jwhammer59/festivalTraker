@@ -51,6 +51,22 @@ export class NavComponent implements OnDestroy {
       ],
     },
     {
+      label: 'Groups',
+      icon: 'pi pi-fw pi-id-card',
+      items: [
+        {
+          label: 'Groups List',
+          icon: 'pi pi-fw pi-list',
+          routerLink: ['groups'],
+        },
+        {
+          label: 'Add Group',
+          icon: 'pi pi-fw pi-plus',
+          routerLink: ['add-group'],
+        },
+      ],
+    },
+    {
       label: 'Volunteers',
       icon: 'pi pi-fw pi-users',
       items: [

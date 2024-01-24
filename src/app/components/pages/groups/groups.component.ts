@@ -6,8 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../common/header/header.component';
 import { BodyComponent } from '../../common/body/body.component';
 
-import { Volunteer } from 'src/app/models/volunteer';
-import { VolunteersService } from 'src/app/services/volunteers.service';
+import { Group } from 'src/app/models/group';
+import { GroupsService } from 'src/app/services/groups.service';
 
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -29,7 +29,7 @@ import {
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-volunteers',
+  selector: 'app-groups',
   standalone: true,
   imports: [
     CommonModule,
@@ -46,47 +46,47 @@ import { Observable } from 'rxjs';
     ToastModule,
     TooltipModule,
   ],
-  templateUrl: './volunteers.component.html',
-  styleUrls: ['./volunteers.component.scss'],
+  templateUrl: './groups.component.html',
+  styleUrls: ['./groups.component.scss'],
 })
-export class VolunteersComponent implements OnInit {
-  headerTitle: string = 'Volunteers';
-  headerIcon: string = 'pi pi-fw pi-users';
+export class GroupsComponent implements OnInit {
+  headerTitle: string = 'Groups';
+  headerIcon: string = 'pi pi-fw pi-id-card';
 
-  buttonTitle: string = 'Add New Event';
-  buttonIcon: string = 'pi pi-fw pi-user-plus';
+  buttonTitle: string = 'Add New Group';
+  buttonIcon: string = 'pi pi-fw pi-plus';
   buttonVisible: boolean = true;
 
-  allVolunteers$!: Observable<Volunteer[]>;
+  allGroups$!: Observable<Group[]>;
 
   constructor(
-    private volunteersService: VolunteersService,
+    private groupsService: GroupsService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
     private router: Router,
     private ngZone: NgZone,
     private primengConfig: PrimeNGConfig
   ) {
-    this.allVolunteers$ = this.volunteersService.getVolunteers();
+    this.allGroups$ = this.groupsService.getGroups();
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
   }
 
-  addNewVolunteer() {
+  addNewGroup() {
     this.ngZone.run(() => {
-      this.router.navigate(['add-volunteer']);
+      this.router.navigate(['add-group']);
     });
   }
 
-  editVolunteer(val: any) {
+  editGroup(val: any) {
     this.ngZone.run(() => {
-      this.router.navigate([`edit-volunteer/${val}`]);
+      this.router.navigate([`edit-group/${val}`]);
     });
   }
 
-  deleteVolunteer(id: string) {
+  deleteGroup(id: string) {
     this.confirmationService.confirm({
       message: 'Are you sure that you want to proceed?',
       header: 'Confirmation',
@@ -95,10 +95,10 @@ export class VolunteersComponent implements OnInit {
         this.messageService.add({
           severity: 'info',
           summary: 'Confirmed',
-          detail: 'Volunteer Deleted!!',
+          detail: 'Group Deleted!!',
           life: 2000,
         });
-        this.volunteersService.deleteVolunteer(id);
+        this.groupsService.deleteGroup(id);
         this.confirmationService.close();
       },
       reject: (type: any) => {
@@ -107,14 +107,14 @@ export class VolunteersComponent implements OnInit {
             this.messageService.add({
               severity: 'error',
               summary: 'Rejected',
-              detail: 'You have rejected Volunteer deletion.',
+              detail: 'You have rejected Group deletion.',
             });
             break;
           case ConfirmEventType.CANCEL:
             this.messageService.add({
               severity: 'warn',
               summary: 'Cancelled',
-              detail: 'You have cancelled Volunteer deletion.',
+              detail: 'You have cancelled Group deletion.',
             });
             break;
         }
