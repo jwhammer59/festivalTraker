@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, NgZone, ɵNoopNgZone } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 import { HeaderComponent } from 'src/app/components/common/header/header.component';
 import { BodyComponent } from 'src/app/components/common/body/body.component';
@@ -12,6 +13,18 @@ import { BodyComponent } from 'src/app/components/common/body/body.component';
   styleUrls: ['./add-volunteer.component.scss'],
 })
 export class AddVolunteerComponent {
-  headerTitle: string = 'Add Volunteer';
+  headerTitle: string = 'Add Volunteers';
   headerIcon: string = 'pi pi-fw pi-user-plus';
+
+  buttonTitle: string = 'Back to Volunteers';
+  buttonIcon: string = 'pi pi-fw pi-arrow-circle-left';
+  buttonVisible: boolean = true;
+
+  constructor(private ngZone: NgZone, private router: Router) {}
+
+  backToVolunteers() {
+    this.ngZone.run(() => {
+      this.router.navigate(['volunteers']);
+    });
+  }
 }

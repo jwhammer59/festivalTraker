@@ -8,5 +8,110 @@
 ></app-header>
 
 <app-body>
-  <h2>Hello from Volunteers</h2>
+  <div class="flex justify-content-center">
+    <p-table
+      *ngIf="allVolunteers$ | async as volunteers"
+      [style]="{ width: '85vw' }"
+      #dt
+      styleClass="p-datatable-sm mt-2"
+      [value]="volunteers"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [globalFilterFields]="[
+        'firstName',
+        'lastName',
+        'email',
+        'phone',
+        'isActive'
+      ]"
+      [rowHover]="true"
+      dataKey="id"
+      selectionMode="single"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-start">
+          <p-avatar
+            icon="pi pi-user"
+            styleClass="mr-2"
+            shape="circle"
+            [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
+          ></p-avatar>
+          <div class="mr-3">Volunteers Table</div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="firstName">
+            First Name<p-sortIcon field="firstName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="lastName">
+            Last Name<p-sortIcon field="lastName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="email">
+            Email<p-sortIcon field="email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="phone">
+            Phone<p-sortIcon field="phone"></p-sortIcon>
+          </th>
+          <th pSortableColumn="isActive">
+            Active?<p-sortIcon field="isActive"></p-sortIcon>
+          </th>
+          <th>
+            <div class="flex justify-content-center">Actions</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-volunteer | async>
+        <tr>
+          <td>
+            {{ volunteer.firstName }}
+          </td>
+          <td>
+            {{ volunteer.lastName }}
+          </td>
+          <td>
+            {{ volunteer.email }}
+          </td>
+          <td>
+            {{ volunteer.phone }}
+          </td>
+          <td>
+            {{ volunteer.isActive }}
+          </td>
+          <td>
+            <div class="flex justify-content-center">
+              <p-button
+                [text]="true"
+                severity="warning"
+                label="Edit"
+                icon="pi pi-fw pi-pencil"
+                (onClick)="editVolunteer(volunteer.id)"
+              ></p-button>
+              <p-button
+                [text]="true"
+                label="Delete"
+                severity="danger"
+                icon="pi pi-fw pi-trash"
+                (onClick)="deleteVolunteer(volunteer.id)"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No data found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total Number of Volunteers:
+          {{ volunteers ? volunteers.length : 0 }}
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
 </app-body>

@@ -8,5 +8,98 @@
 ></app-header>
 
 <app-body>
-  <h2>Hello from Events</h2>
+  <div class="flex justify-content-center">
+    <p-table
+      *ngIf="allEvents$ | async as events"
+      [style]="{ width: '85vw' }"
+      #dt
+      styleClass="p-datatable-sm mt-2"
+      [value]="events"
+      [rows]="10"
+      [rowsPerPageOptions]="[10, 25, 50]"
+      [paginator]="true"
+      [globalFilterFields]="['name', 'startDate', 'endDate', 'status']"
+      [rowHover]="true"
+      dataKey="id"
+      selectionMode="single"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+      [showCurrentPageReport]="true"
+    >
+      <ng-template pTemplate="caption">
+        <div class="flex align-items-center justify-content-start">
+          <p-avatar
+            icon="pi pi-calendar"
+            styleClass="mr-2"
+            shape="circle"
+            [style]="{ 'background-color': '#2196F3', color: '#ffffff' }"
+          ></p-avatar>
+          <div class="mr-3">Events Table</div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th pSortableColumn="name">
+            Name<p-sortIcon field="name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="startDate">
+            Start Date<p-sortIcon field="startDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="endDate">
+            End Date<p-sortIcon field="endDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">
+            Status<p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th>
+            <div class="flex justify-content-center">Actions</div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-event | async>
+        <tr>
+          <td>
+            {{ event.name }}
+          </td>
+          <td>
+            {{ event.startDate }}
+          </td>
+          <td>
+            {{ event.endDate }}
+          </td>
+          <td>
+            {{ event.status }}
+          </td>
+          <td>
+            <div class="flex justify-content-center">
+              <p-button
+                [text]="true"
+                severity="warning"
+                label="Edit"
+                icon="pi pi-fw pi-pencil"
+                (onClick)="editEvent(event.id)"
+              ></p-button>
+              <p-button
+                [text]="true"
+                label="Delete"
+                severity="danger"
+                icon="pi pi-fw pi-trash"
+                (onClick)="deleteEvent(event.id)"
+              ></p-button>
+            </div>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="8">No data found.</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="flex align-items-center justify-content-between">
+          Total Number of Events:
+          {{ events ? events.length : 0 }}
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
 </app-body>
