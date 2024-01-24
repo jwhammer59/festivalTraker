@@ -8,6 +8,7 @@ export interface Volunteer {
   address2: string;
   city: string;
   state: string;
-  zipcode: number;
+  zipcode: string;
   isActive: boolean;
+  isMinor: boolean;
 }
