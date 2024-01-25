@@ -18,7 +18,12 @@
       [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
-      [globalFilterFields]="['name', 'shiftStart', 'shiftEnd', 'isActive']"
+      [globalFilterFields]="[
+        'shiftName',
+        'shiftStart',
+        'shiftEnd',
+        'shiftVolsRequired'
+      ]"
       [rowHover]="true"
       dataKey="id"
       selectionMode="single"
@@ -38,8 +43,8 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="name">
-            Name<p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="shiftName">
+            Shift Name<p-sortIcon field="shiftName"></p-sortIcon>
           </th>
           <th pSortableColumn="shiftStart">
             Shift Start<p-sortIcon field="shiftStart"></p-sortIcon>
@@ -47,8 +52,10 @@
           <th pSortableColumn="shiftEnd">
             Shift End<p-sortIcon field="shiftEnd"></p-sortIcon>
           </th>
-          <th pSortableColumn="isActive">
-            Active?<p-sortIcon field="isActive"></p-sortIcon>
+          <th pSortableColumn="shiftVolsRequired">
+            Volunteers Required<p-sortIcon
+              field="shiftVolsRequired"
+            ></p-sortIcon>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -58,16 +65,16 @@
       <ng-template pTemplate="body" let-shift | async>
         <tr>
           <td>
-            {{ shift.firstName }}
+            {{ shift.shiftName }}
           </td>
           <td>
-            {{ shift.lastName }}
+            {{ shift.shiftStart }}
           </td>
           <td>
-            {{ shift.email }}
+            {{ shift.shiftEnd }}
           </td>
           <td>
-            {{ shift.isActive }}
+            {{ shift.shiftVolsRequired }}
           </td>
           <td>
             <div class="flex justify-content-center">
@@ -96,7 +103,7 @@
       </ng-template>
       <ng-template pTemplate="summary">
         <div class="flex align-items-center justify-content-between">
-          Total Number of Volunteers:
+          Total Number of Shifts:
           {{ shifts ? shifts.length : 0 }}
         </div>
       </ng-template>

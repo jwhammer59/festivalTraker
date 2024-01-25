@@ -1,3 +1,5 @@
+<p-toast key="error"></p-toast>
+<p-toast key="success" (onClose)="backToShifts()"></p-toast>
 <app-header
   [title]="headerTitle"
   [icon]="headerIcon"
@@ -8,5 +10,105 @@
 ></app-header>
 
 <app-body>
-  <h2>Hello from Add Shifts</h2>
+  <form
+    [formGroup]="addShiftForm"
+    (ngSubmit)="onSubmit(addShiftForm)"
+    novalidate
+  >
+    <div class="flex justify-content-center">
+      <p-card
+        styleClass="bg-blue-100"
+        header="{{ headerTitle }} Form"
+        [style]="{ width: '50vw' }"
+      >
+        <ng-template pTemplate="content">
+          <div class="formgrid grid">
+            <div class="field col-12 md:col-6">
+              <label for="shiftName">Shift Name</label>
+              <input
+                id="shiftName"
+                type="text"
+                formControlName="shiftName"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+              <small
+                *ngIf="
+                  (f['shiftName'].invalid && f['shiftName'].dirty) ||
+                  (addShiftForm.invalid &&
+                    this.submitted &&
+                    f['shiftName'].invalid)
+                "
+                id="shiftName-help"
+                class="p-error"
+                >{{ getShiftNameMessage() }}</small
+              >
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for="shiftVolsRequired"># of Volunteers Required</label>
+              <div class="flex justify-content-center">
+                <div class="flex flex-column align-items-center">
+                  <p-knob
+                    id="shiftVolsRequired"
+                    name="shiftVolsRequired"
+                    rangeColor="#ffffff"
+                    [min]="1"
+                    [max]="25"
+                    [step]="1"
+                    formControlName="shiftVolsRequired"
+                  ></p-knob>
+                  <p>Click on Circle to Set Number</p>
+                </div>
+              </div>
+            </div>
+            <div class="field col-12 lg:col-6">
+              <label for="shiftStart">Shift Start Time</label>
+              <p-calendar
+                [showIcon]="true"
+                icon="pi pi-fw pi-clock"
+                [timeOnly]="true"
+                styleClass="text-base text-color focus:border-primary w-full"
+                inputId="shiftStart"
+                name="shiftStart"
+                dataType="string"
+                formControlName="shiftStart"
+              ></p-calendar>
+            </div>
+            <div class="field col-12 lg:col-6">
+              <label for="shiftEnd">Shift End Time</label>
+              <p-calendar
+                [showIcon]="true"
+                icon="pi pi-fw pi-clock"
+                [timeOnly]="true"
+                styleClass="text-base text-color focus:border-primary w-full"
+                inputId="shiftEnd"
+                name="shiftEnd"
+                dataType="string"
+                formControlName="shiftEnd"
+              ></p-calendar>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex justify-content-around">
+            <p-button
+              label="Save"
+              icon="pi pi-fw pi-save"
+              [outlined]="true"
+              [raised]="true"
+              severity="success"
+              type="submit"
+            ></p-button>
+            <p-button
+              label="Cancel"
+              icon="pi pi-fw pi-times"
+              [outlined]="true"
+              [raised]="true"
+              severity="warning"
+              (onClick)="backToShifts()"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </form>
 </app-body>

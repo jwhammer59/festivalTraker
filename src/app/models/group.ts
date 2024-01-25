@@ -3,8 +3,8 @@ import { Volunteer } from './volunteer';
 
 export interface Group {
   id: string;
-  eventDayId: string;
   name: string;
+  groupChair: string;
   shifts: Shift[];
   volunteers: Volunteer[];
 }
