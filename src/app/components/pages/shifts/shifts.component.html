@@ -44,18 +44,26 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="shiftName">
-            Shift Name<p-sortIcon field="shiftName"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Shift Name<p-sortIcon field="shiftName"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="shiftStart">
-            Shift Start<p-sortIcon field="shiftStart"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Shift Start<p-sortIcon field="shiftStart"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="shiftEnd">
-            Shift End<p-sortIcon field="shiftEnd"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Shift End<p-sortIcon field="shiftEnd"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="shiftVolsRequired">
-            Volunteers Required<p-sortIcon
-              field="shiftVolsRequired"
-            ></p-sortIcon>
+            <div class="flex justify-content-center">
+              Volunteers Required<p-sortIcon
+                field="shiftVolsRequired"
+              ></p-sortIcon>
+            </div>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -65,16 +73,24 @@
       <ng-template pTemplate="body" let-shift | async>
         <tr>
           <td>
-            {{ shift.shiftName }}
+            <div class="flex justify-content-center">
+              {{ shift.shiftName }}
+            </div>
           </td>
           <td>
-            {{ shift.shiftStart }}
+            <div class="flex justify-content-center">
+              {{ shift.shiftStart }}
+            </div>
           </td>
           <td>
-            {{ shift.shiftEnd }}
+            <div class="flex justify-content-center">
+              {{ shift.shiftEnd }}
+            </div>
           </td>
           <td>
-            {{ shift.shiftVolsRequired }}
+            <div class="flex justify-content-center">
+              {{ shift.shiftVolsRequired }}
+            </div>
           </td>
           <td>
             <div class="flex justify-content-center">

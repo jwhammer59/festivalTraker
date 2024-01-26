@@ -46,19 +46,29 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="firstName">
-            First Name<p-sortIcon field="firstName"></p-sortIcon>
+            <div class="flex justify-content-center">
+              First Name<p-sortIcon field="firstName"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="lastName">
-            Last Name<p-sortIcon field="lastName"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Last Name<p-sortIcon field="lastName"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="email">
-            Email<p-sortIcon field="email"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Email<p-sortIcon field="email"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="phone">
-            Phone<p-sortIcon field="phone"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Phone<p-sortIcon field="phone"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="isActive">
-            Active?<p-sortIcon field="isActive"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Active?<p-sortIcon field="isActive"></p-sortIcon>
+            </div>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -68,16 +78,24 @@
       <ng-template pTemplate="body" let-volunteer | async>
         <tr>
           <td>
-            {{ volunteer.firstName }}
+            <div class="flex justify-content-center">
+              {{ volunteer.firstName }}
+            </div>
           </td>
           <td>
-            {{ volunteer.lastName }}
+            <div class="flex justify-content-center">
+              {{ volunteer.lastName }}
+            </div>
           </td>
           <td>
-            {{ volunteer.email }}
+            <div class="flex justify-content-center">
+              {{ volunteer.email }}
+            </div>
           </td>
           <td>
-            {{ volunteer.phone }}
+            <div class="flex justify-content-center">
+              {{ volunteer.phone }}
+            </div>
           </td>
           <td>
             <div class="flex justify-content-center">

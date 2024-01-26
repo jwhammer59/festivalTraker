@@ -18,7 +18,12 @@
       [rows]="10"
       [rowsPerPageOptions]="[10, 25, 50]"
       [paginator]="true"
-      [globalFilterFields]="['name', 'startDate', 'endDate', 'status']"
+      [globalFilterFields]="[
+        'eventName',
+        'eventStartDate',
+        'eventEndDate',
+        'eventIsActive'
+      ]"
       [rowHover]="true"
       dataKey="id"
       selectionMode="single"
@@ -38,17 +43,17 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="name">
-            Name<p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="eventName">
+            Event Name<p-sortIcon field="eventName"></p-sortIcon>
           </th>
-          <th pSortableColumn="startDate">
-            Start Date<p-sortIcon field="startDate"></p-sortIcon>
+          <th pSortableColumn="eventStartDate">
+            Event Start Date<p-sortIcon field="eventStartDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="endDate">
-            End Date<p-sortIcon field="endDate"></p-sortIcon>
+          <th pSortableColumn="eventEndDate">
+            Event End Date<p-sortIcon field="eventEndDate"></p-sortIcon>
           </th>
-          <th pSortableColumn="status">
-            Status<p-sortIcon field="status"></p-sortIcon>
+          <th pSortableColumn="eventIsActive">
+            Event Active<p-sortIcon field="eventIsActive"></p-sortIcon>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -58,16 +63,16 @@
       <ng-template pTemplate="body" let-event | async>
         <tr>
           <td>
-            {{ event.name }}
+            {{ event.eventName }}
           </td>
           <td>
-            {{ event.startDate }}
+            {{ event.eventStartDate }}
           </td>
           <td>
-            {{ event.endDate }}
+            {{ event.eventEndDate }}
           </td>
           <td>
-            {{ event.status }}
+            {{ event.eventIsActive }}
           </td>
           <td>
             <div class="flex justify-content-center">

@@ -1,3 +1,5 @@
+<p-toast key="error"></p-toast>
+<p-toast key="success" (onClose)="backToEvents()"></p-toast>
 <app-header
   [title]="headerTitle"
   [icon]="headerIcon"
@@ -8,5 +10,93 @@
 ></app-header>
 
 <app-body>
-  <h2>Hello from Add Events</h2>
+  <form
+    [formGroup]="addEventForm"
+    (ngSubmit)="onSubmit(addEventForm)"
+    novalidate
+  >
+    <div class="flex justify-content-center">
+      <p-card styleClass="bg-blue-100" header="{{ headerTitle }} Form">
+        <ng-template pTemplate="content">
+          <div class="formgrid grid">
+            <div class="field col-12 md:col-6">
+              <label for="eventName">Event Name</label>
+              <input
+                id="eventName"
+                type="text"
+                formControlName="eventName"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+              <small
+                *ngIf="
+                  (f['eventName'].invalid && f['eventName'].dirty) ||
+                  (addEventForm.invalid &&
+                    this.submitted &&
+                    f['eventName'].invalid)
+                "
+                id="eventName-help"
+                class="p-error"
+                >{{ getEventNameMessage() }}</small
+              >
+            </div>
+            <div class="flex justify-content-center col-12 md:col-6 mt-2">
+              <div class="field-checkbox">
+                <p-checkbox
+                  formControlName="eventIsActive"
+                  [binary]="true"
+                  inputId="eventIsActive"
+                  name="eventIsActive"
+                ></p-checkbox>
+                <label for="eventIsActive">Event is Active?</label>
+              </div>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for="eventStartDate">Event Start Date</label>
+              <p-calendar
+                [showIcon]="true"
+                icon="pi pi-fw pi-calendar-plus"
+                styleClass="text-base text-color focus:border-primary w-full"
+                inputId="eventStartDate"
+                name="eventStartDate"
+                dataType="string"
+                formControlName="eventStartDate"
+              ></p-calendar>
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for="eventEndDate">Event End Date</label>
+              <p-calendar
+                [showIcon]="true"
+                icon="pi pi-fw pi-calendar-plus"
+                styleClass="text-base text-color focus:border-primary w-full"
+                inputId="eventEndDate"
+                name="eventEndDate"
+                dataType="string"
+                formControlName="eventEndDate"
+              ></p-calendar>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex justify-content-around">
+            <p-button
+              label="Save"
+              icon="pi pi-fw pi-save"
+              [outlined]="true"
+              [raised]="true"
+              severity="success"
+              type="submit"
+            ></p-button>
+            <p-button
+              label="Cancel"
+              icon="pi pi-fw pi-times"
+              [outlined]="true"
+              [raised]="true"
+              severity="warning"
+              (onClick)="backToEvents()"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </form>
 </app-body>

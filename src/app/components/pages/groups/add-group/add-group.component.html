@@ -1,1 +1,151 @@
-<p>add-group works!</p>
+<p-toast key="error"></p-toast>
+<p-toast key="success" (onClose)="backToGroups()"></p-toast>
+<app-header
+  [title]="headerTitle"
+  [icon]="headerIcon"
+  [buttonIcon]="buttonIcon"
+  [buttonTitle]="buttonTitle"
+  [buttonVisible]="buttonVisible"
+  (buttonAction)="backToGroups()"
+></app-header>
+
+<app-body>
+  <form
+    [formGroup]="addGroupForm"
+    (ngSubmit)="onSubmit(addGroupForm)"
+    novalidate
+  >
+    <div class="flex justify-content-center">
+      <p-card styleClass="bg-blue-100" header="{{ headerTitle }} Form">
+        <ng-template pTemplate="content">
+          <div class="formgrid grid">
+            <div class="field col-12 md:col-6">
+              <label for="groupName">Group Name</label>
+              <input
+                id="groupName"
+                type="text"
+                formControlName="groupName"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+              <small
+                *ngIf="
+                  (f['groupName'].invalid && f['groupName'].dirty) ||
+                  (addGroupForm.invalid &&
+                    this.submitted &&
+                    f['groupName'].invalid)
+                "
+                id="groupName-help"
+                class="p-error"
+                >{{ getGroupNameMessage() }}</small
+              >
+            </div>
+            <div class="field col-12 md:col-6">
+              <label for="groupChair">Group Chairperson</label>
+              <input
+                id="groupChair"
+                type="text"
+                formControlName="groupChair"
+                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+              />
+              <small
+                *ngIf="
+                  (f['groupChair'].invalid && f['groupChair'].dirty) ||
+                  (addGroupForm.invalid &&
+                    this.submitted &&
+                    f['groupChair'].invalid)
+                "
+                id="groupChair-help"
+                class="p-error"
+                >{{ getGroupChairNameMessage() }}</small
+              >
+            </div>
+            <p-divider></p-divider>
+            <div class="field col-12">
+              <div class="flex flex-column">
+                <div class="flex justify-content-center">
+                  <span class="text-2xl md:text-1xl font-bold mb-3"
+                    >Select Shifts for this Group</span
+                  >
+                </div>
+                <p-pickList
+                  [source]="sourceShifts"
+                  [target]="targetShifts"
+                  sourceHeader="Available Shifts"
+                  targetHeader="Selected Shifts"
+                  [dragdrop]="true"
+                  [responsive]="true"
+                  [sourceStyle]="{ height: '20rem' }"
+                  [targetStyle]="{ height: '20rem' }"
+                  breakpoint="1200px"
+                  (onMoveToTarget)="sendToShiftsTarget()"
+                  (onMoveToSource)="sendToShiftsSource()"
+                >
+                  <ng-template let-shift pTemplate="item">
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                      <div class="flex-1 flex flex-column gap-2">
+                        <span class="font-bold">{{ shift.shiftName }}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-pickList>
+              </div>
+            </div>
+            <div class="field col-12">
+              <div class="flex flex-column">
+                <div class="flex justify-content-center">
+                  <span class="text-2xl md:text-1xl font-bold mb-3"
+                    >Select Volunteers for this Group</span
+                  >
+                </div>
+                <p-pickList
+                  [source]="sourceVolunteers"
+                  [target]="targetVolunteers"
+                  sourceHeader="Available Volunteerss"
+                  targetHeader="Selected Volunteerss"
+                  [dragdrop]="true"
+                  [responsive]="true"
+                  [sourceStyle]="{ height: '20rem' }"
+                  [targetStyle]="{ height: '20rem' }"
+                  breakpoint="1200px"
+                  (onMoveToTarget)="sendToVolunteersTarget()"
+                  (onMoveToSource)="sendToVolunteersSource()"
+                >
+                  <ng-template let-volunteer pTemplate="item">
+                    <div class="flex flex-wrap p-2 align-items-center gap-3">
+                      <div class="flex-1 flex flex-column gap-2">
+                        <span class="font-bold"
+                          >{{ volunteer.firstName }}
+                          {{ volunteer.lastName }}</span
+                        >
+                      </div>
+                    </div>
+                  </ng-template>
+                </p-pickList>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="flex justify-content-around">
+            <p-button
+              label="Save"
+              icon="pi pi-fw pi-save"
+              [outlined]="true"
+              [raised]="true"
+              severity="success"
+              type="submit"
+            ></p-button>
+            <p-button
+              label="Cancel"
+              icon="pi pi-fw pi-times"
+              [outlined]="true"
+              [raised]="true"
+              severity="warning"
+              (onClick)="backToGroups()"
+            ></p-button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+  </form>
+</app-body>

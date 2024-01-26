@@ -39,8 +39,15 @@
       </ng-template>
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="name">
-            Group Name<p-sortIcon field="name"></p-sortIcon>
+          <th pSortableColumn="groupName">
+            <div class="flex justify-content-center">
+              Group Name<p-sortIcon field="groupName"></p-sortIcon>
+            </div>
+          </th>
+          <th pSortableColumn="groupChair">
+            <div class="flex justify-content-center">
+              Group Chairperson<p-sortIcon field="groupName"></p-sortIcon>
+            </div>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -50,16 +57,13 @@
       <ng-template pTemplate="body" let-group | async>
         <tr>
           <td>
-            {{ group.name }}
+            <div class="flex justify-content-center">
+              {{ group.groupName }}
+            </div>
           </td>
           <td>
             <div class="flex justify-content-center">
-              <p-checkbox
-                [(ngModel)]="group.isActive"
-                [binary]="true"
-                inputId="binary"
-                [disabled]="true"
-              ></p-checkbox>
+              {{ group.groupChair }}
             </div>
           </td>
           <td>
