@@ -15,14 +15,19 @@ import { BodyComponent } from 'src/app/components/common/body/body.component';
 import { Shift } from 'src/app/models/shift';
 import { ShiftsService } from 'src/app/services/shifts.service';
 
+import { Group } from 'src/app/models/group';
+import { GroupsService } from 'src/app/services/groups.service';
+
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { KnobModule } from 'primeng/knob';
 import { ToastModule } from 'primeng/toast';
 
 import { PrimeNGConfig, MessageService } from 'primeng/api';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-add-shift',
@@ -35,6 +40,7 @@ import { PrimeNGConfig, MessageService } from 'primeng/api';
     ButtonModule,
     CalendarModule,
     CardModule,
+    DropdownModule,
     InputTextModule,
     KnobModule,
     ToastModule,
@@ -53,8 +59,11 @@ export class AddShiftComponent implements OnInit {
   addShiftForm!: FormGroup;
   submitted: boolean = false;
 
+  allGroups$!: Observable<Group[]>;
+
   constructor(
     private shiftsService: ShiftsService,
+    private groupsService: GroupsService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private ngZone: NgZone,
@@ -63,6 +72,7 @@ export class AddShiftComponent implements OnInit {
   ) {
     this.addShiftForm = this.fb.group({
       shiftName: ['', [Validators.required, Validators.minLength(5)]],
+      shiftGroup: ['', Validators.required],
       shiftStart: ['', Validators.required],
       shiftEnd: ['', Validators.required],
       shiftVolsRequired: [null, Validators.required],
@@ -71,6 +81,7 @@ export class AddShiftComponent implements OnInit {
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.allGroups$ = this.groupsService.getGroups();
   }
 
   get f() {

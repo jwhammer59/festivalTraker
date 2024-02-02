@@ -58,6 +58,8 @@ export class ShiftsComponent implements OnInit {
 
   constructor(
     private shiftsService: ShiftsService,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private router: Router,
     private ngZone: NgZone
   ) {
@@ -76,7 +78,40 @@ export class ShiftsComponent implements OnInit {
     console.log(val);
   }
 
-  deleteShift(val: any) {
-    console.log(val);
+  deleteShift(id: any) {
+    this.confirmationService.confirm({
+      message: 'Are you sure that you want to proceed?',
+      header: 'Confirmation',
+      icon: 'pi pi-exclamation-triangle',
+      accept: () => {
+        this.messageService.add({
+          severity: 'info',
+          summary: 'Confirmed',
+          detail: 'Shift Deleted!!',
+          life: 2000,
+        });
+        this.shiftsService.deleteShift(id);
+        this.confirmationService.close();
+      },
+      reject: (type: any) => {
+        switch (type) {
+          case ConfirmEventType.REJECT:
+            this.messageService.add({
+              severity: 'error',
+              summary: 'Rejected',
+              detail: 'You have rejected Shift deletion.',
+            });
+            break;
+          case ConfirmEventType.CANCEL:
+            this.messageService.add({
+              severity: 'warn',
+              summary: 'Cancelled',
+              detail: 'You have cancelled Shift deletion.',
+            });
+            break;
+        }
+        this.confirmationService.close();
+      },
+    });
   }
 }

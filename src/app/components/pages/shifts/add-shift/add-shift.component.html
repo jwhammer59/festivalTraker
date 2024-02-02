@@ -19,29 +19,46 @@
       <p-card
         styleClass="bg-blue-100"
         header="{{ headerTitle }} Form"
-        [style]="{ width: '50vw' }"
+        [style]="{ width: '65vw' }"
       >
         <ng-template pTemplate="content">
           <div class="formgrid grid">
             <div class="field col-12 md:col-6">
-              <label for="shiftName">Shift Name</label>
-              <input
-                id="shiftName"
-                type="text"
-                formControlName="shiftName"
-                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-              />
-              <small
-                *ngIf="
-                  (f['shiftName'].invalid && f['shiftName'].dirty) ||
-                  (addShiftForm.invalid &&
-                    this.submitted &&
-                    f['shiftName'].invalid)
-                "
-                id="shiftName-help"
-                class="p-error"
-                >{{ getShiftNameMessage() }}</small
-              >
+              <div class="field">
+                <label for="shiftName">Shift Name</label>
+                <input
+                  id="shiftName"
+                  type="text"
+                  formControlName="shiftName"
+                  class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                />
+                <small
+                  *ngIf="
+                    (f['shiftName'].invalid && f['shiftName'].dirty) ||
+                    (addShiftForm.invalid &&
+                      this.submitted &&
+                      f['shiftName'].invalid)
+                  "
+                  id="shiftName-help"
+                  class="p-error"
+                  >{{ getShiftNameMessage() }}</small
+                >
+              </div>
+              <div class="field">
+                <label for="shiftGroup">Groups</label>
+                <p-dropdown
+                  class="ng-invalid ng-dirty"
+                  *ngIf="allGroups$ | async as groups"
+                  styleClass="text-base text-color surface-overlay border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary p-inputtext-sm w-full"
+                  [options]="groups"
+                  name="shiftGroup"
+                  id="shiftGroup"
+                  optionLabel="groupName"
+                  optionValue="groupName"
+                  formControlName="shiftGroup"
+                  placeholder="Select a Group"
+                ></p-dropdown>
+              </div>
             </div>
             <div class="field col-12 md:col-6">
               <label
@@ -70,12 +87,24 @@
                 [showIcon]="true"
                 icon="pi pi-fw pi-clock"
                 [timeOnly]="true"
+                hourFormat="12"
                 styleClass="text-base text-color focus:border-primary w-full"
                 inputId="shiftStart"
                 name="shiftStart"
                 dataType="string"
                 formControlName="shiftStart"
               ></p-calendar>
+              <small
+                *ngIf="
+                  (f['shiftStart'].invalid && f['shiftStart'].dirty) ||
+                  (addShiftForm.invalid &&
+                    this.submitted &&
+                    f['shiftStart'].invalid)
+                "
+                id="shiftStart-help"
+                class="p-error"
+                >Shift start time required.</small
+              >
             </div>
             <div class="field col-12 lg:col-6">
               <label for="shiftEnd">Shift End Time</label>
@@ -83,12 +112,24 @@
                 [showIcon]="true"
                 icon="pi pi-fw pi-clock"
                 [timeOnly]="true"
+                hourFormat="12"
                 styleClass="text-base text-color focus:border-primary w-full"
                 inputId="shiftEnd"
                 name="shiftEnd"
                 dataType="string"
                 formControlName="shiftEnd"
               ></p-calendar>
+              <small
+                *ngIf="
+                  (f['shiftEnd'].invalid && f['shiftEnd'].dirty) ||
+                  (addShiftForm.invalid &&
+                    this.submitted &&
+                    f['shiftEnd'].invalid)
+                "
+                id="shiftEnd-help"
+                class="p-error"
+                >Shift end time required.</small
+              >
             </div>
           </div>
         </ng-template>

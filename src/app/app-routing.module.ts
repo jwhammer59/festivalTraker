@@ -26,6 +26,14 @@ const routes: Routes = [
     canActivate: [AuthGuard],
   },
   {
+    path: 'schedule-event/:id',
+    loadComponent: () =>
+      import(
+        './components/pages/events/schedule/schedule-event.component'
+      ).then((m) => m.ScheduleEventComponent),
+    canActivate: [AuthGuard],
+  },
+  {
     path: 'edit-event/:id',
     loadComponent: () =>
       import('./components/pages/events/edit-event/edit-event.component').then(

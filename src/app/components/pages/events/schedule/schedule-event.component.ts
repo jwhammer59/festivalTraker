@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { Router } from '@angular/router';
+import { CommonModule, Location } from '@angular/common';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { HeaderComponent } from 'src/app/components/common/header/header.component';
@@ -8,6 +8,9 @@ import { BodyComponent } from 'src/app/components/common/body/body.component';
 
 import { Event } from 'src/app/models/event';
 import { EventsService } from 'src/app/services/events.service';
+
+import { Group } from 'src/app/models/group';
+import { GroupsService } from 'src/app/services/groups.service';
 
 import { AvatarModule } from 'primeng/avatar';
 import { ButtonModule } from 'primeng/button';
@@ -24,11 +27,10 @@ import { PrimeNGConfig } from 'primeng/api';
 import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-events',
+  selector: 'app-schedule-event',
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,
     HeaderComponent,
     BodyComponent,
     AvatarModule,
@@ -41,41 +43,39 @@ import { Observable } from 'rxjs';
     ToastModule,
     TooltipModule,
   ],
-  templateUrl: './events.component.html',
-  styleUrls: ['./events.component.scss'],
+  templateUrl: './schedule-event.component.html',
+  styleUrls: ['./schedule-event.component.scss'],
 })
-export class EventsComponent implements OnInit {
-  headerTitle: string = 'Events';
+export class ScheduleEventComponent implements OnInit {
+  headerTitle: string = 'Schedule Event Days';
   headerIcon: string = 'pi pi-fw pi-calendar';
 
   buttonTitle: string = 'Add New Event';
   buttonIcon: string = 'pi pi-fw pi-calendar-plus';
   buttonVisible: boolean = true;
 
-  allEvents$!: Observable<Event[]>;
+  id: string = '';
+
+  allGroups$!: Observable<Group[]>;
 
   constructor(
     private eventsService: EventsService,
-    private primengConfig: PrimeNGConfig,
+    private groupsService: GroupsService,
     private router: Router,
-    private ngZone: NgZone
+    private route: ActivatedRoute,
+    private ngZone: NgZone,
+    private primengConfig: PrimeNGConfig
   ) {
-    this.allEvents$ = this.eventsService.getEvents();
+    console.log('constructor called');
   }
 
   ngOnInit(): void {
     this.primengConfig.ripple = true;
+    this.id = this.route.snapshot.params['id'];
+    this.allGroups$ = this.groupsService.getGroups();
   }
 
-  addNewEvent() {
-    this.ngZone.run(() => {
-      this.router.navigate(['add-event']);
-    });
-  }
-
-  eventDetails(val: any) {
-    this.ngZone.run(() => {
-      this.router.navigate([`event-details/${val}`]);
-    });
+  addNewEventDay() {
+    console.log('Hello Event Day');
   }
 }

@@ -1,0 +1,18 @@
+#main {
+  width: 98vw;
+  height: 100vh;
+  background: #f5f9ff;
+}
+
+#header {
+  background: rgb(41, 91, 172);
+  background: radial-gradient(
+    circle,
+    rgba(41, 91, 172, 1) 0%,
+    rgba(59, 130, 246, 1) 50%,
+    rgba(208, 225, 253, 1) 100%
+  );
+
+  width: 90vw;
+  border-radius: 0.25rem;
+}

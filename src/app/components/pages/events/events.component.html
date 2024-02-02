@@ -44,16 +44,24 @@
       <ng-template pTemplate="header">
         <tr>
           <th pSortableColumn="eventName">
-            Event Name<p-sortIcon field="eventName"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Event Name<p-sortIcon field="eventName"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="eventStartDate">
-            Event Start Date<p-sortIcon field="eventStartDate"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Event Start Date<p-sortIcon field="eventStartDate"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="eventEndDate">
-            Event End Date<p-sortIcon field="eventEndDate"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Event End Date<p-sortIcon field="eventEndDate"></p-sortIcon>
+            </div>
           </th>
           <th pSortableColumn="eventIsActive">
-            Event Active<p-sortIcon field="eventIsActive"></p-sortIcon>
+            <div class="flex justify-content-center">
+              Event Active<p-sortIcon field="eventIsActive"></p-sortIcon>
+            </div>
           </th>
           <th>
             <div class="flex justify-content-center">Actions</div>
@@ -63,32 +71,38 @@
       <ng-template pTemplate="body" let-event | async>
         <tr>
           <td>
-            {{ event.eventName }}
+            <div class="flex justify-content-center">
+              {{ event.eventName }}
+            </div>
           </td>
           <td>
-            {{ event.eventStartDate }}
+            <div class="flex justify-content-center">
+              {{ event.eventStartDate }}
+            </div>
           </td>
           <td>
-            {{ event.eventEndDate }}
+            <div class="flex justify-content-center">
+              {{ event.eventEndDate }}
+            </div>
           </td>
           <td>
-            {{ event.eventIsActive }}
+            <div class="flex justify-content-center">
+              <p-checkbox
+                [disabled]="true"
+                [(ngModel)]="event.eventIsActive"
+                [binary]="true"
+              ></p-checkbox>
+            </div>
           </td>
           <td>
             <div class="flex justify-content-center">
               <p-button
-                [text]="true"
-                severity="warning"
-                label="Edit"
-                icon="pi pi-fw pi-pencil"
-                (onClick)="editEvent(event.id)"
-              ></p-button>
-              <p-button
-                [text]="true"
-                label="Delete"
-                severity="danger"
-                icon="pi pi-fw pi-trash"
-                (onClick)="deleteEvent(event.id)"
+                [outlined]="true"
+                [raised]="true"
+                severity="primary"
+                label="Event Details"
+                icon="pi pi-fw pi-info-circle"
+                (onClick)="eventDetails(event.id)"
               ></p-button>
             </div>
           </td>

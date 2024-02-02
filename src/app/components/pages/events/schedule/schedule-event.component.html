@@ -1,0 +1,14 @@
+<app-header
+  [title]="headerTitle"
+  [icon]="headerIcon"
+  [buttonTitle]="buttonTitle"
+  [buttonIcon]="buttonIcon"
+  [buttonVisible]="buttonVisible"
+  (buttonAction)="addNewEventDay()"
+></app-header>
+
+<app-body>
+  <div class="flex justify-content-center">
+    <h2>{{ id }}</h2>
+  </div>
+</app-body>

@@ -1,1 +1,223 @@
-<p>event-detail works!</p>
+<p-toast (onClose)="closeAddEventDay()"></p-toast>
+<app-header
+  [title]="headerTitle"
+  [icon]="headerIcon"
+  [buttonTitle]="buttonTitle"
+  [buttonIcon]="buttonIcon"
+  [buttonVisible]="buttonVisible"
+  (buttonAction)="backToEvents()"
+></app-header>
+
+<div class="main">
+  <div class="mt-2">
+    <p-panel *ngIf="event$ | async as event">
+      <ng-template pTemplate="header">
+        <div>
+          <span class="text-2xl font-bold">{{ event.eventName }}</span>
+        </div>
+      </ng-template>
+      <div class="flex justify-content-between">
+        <div>
+          <span class="font-bold mr-1">Start Date:</span>
+          {{ event.eventStartDate }}
+        </div>
+        <div>
+          <p-checkbox
+            styleClass="mr-2"
+            inputId="isActive"
+            [disabled]="true"
+            [(ngModel)]="event.eventIsActive"
+            [binary]="true"
+          ></p-checkbox>
+          <label for="isActive">Active</label>
+        </div>
+        <div>
+          <span class="font-bold mr-1">End Date:</span>
+          {{ event.eventEndDate }}
+        </div>
+      </div>
+      <div class="grid p-fluid mt-5">
+        <div class="col-12 xl:col-6">
+          <p-panel header="Event Dates">
+            <ng-template pTemplate="icons">
+              <p-button
+                styleClass="p-panel-header-icon"
+                [text]="true"
+                icon="pi pi-fw pi-calendar-plus"
+                pTooltip="Add Date"
+                tooltipPosition="top"
+                [showDelay]="500"
+                (onClick)="addEventDay()"
+              ></p-button>
+            </ng-template>
+            <ng-template pTemplate="content">
+              <p-table
+                *ngIf="allEventDays$ | async as eventDays"
+                styleClass="p-datatable-sm mt-2"
+                dataKey="id"
+                [value]="eventDays"
+                [rows]="5"
+                [rowsPerPageOptions]="[5, 10, 25]"
+                [paginator]="true"
+                [showFirstLastIcon]="false"
+                [globalFilterFields]="['eventDayDate', 'eventDayIsActive']"
+                [rowHover]="true"
+                selectionMode="single"
+                [(selection)]="selectedEventDay"
+                [showCurrentPageReport]="true"
+              >
+                <ng-template pTemplate="caption">
+                  <div class="flex align-items-center justify-content-start">
+                    <p-avatar
+                      icon="pi pi-calendar"
+                      styleClass="mr-2"
+                      shape="circle"
+                      [style]="{
+                        'background-color': '#2196F3',
+                        color: '#ffffff'
+                      }"
+                    ></p-avatar>
+                    <div class="mr-3">Event Days Table</div>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th pSortableColumn="eventDayDate">
+                      <div class="flex justify-content-center">
+                        Date<p-sortIcon field="eventDayDate"></p-sortIcon>
+                      </div>
+                    </th>
+                    <th pSortableColumn="eventDayIsActive">
+                      <div class="flex justify-content-center">
+                        Active?<p-sortIcon
+                          field="eventDayIsActive"
+                        ></p-sortIcon>
+                      </div>
+                    </th>
+                    <th>
+                      <div class="flex justify-content-center">Actions</div>
+                    </th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-eventDay | async>
+                  <tr>
+                    <td>
+                      <div class="flex justify-content-center">
+                        {{ eventDay.eventDayDate }}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="flex justify-content-center">
+                        <p-checkbox
+                          [disabled]="true"
+                          [(ngModel)]="eventDay.eventDayIsActive"
+                          [binary]="true"
+                        ></p-checkbox>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="flex justify-content-center">
+                        <p-button
+                          (onClick)="goToEventDayDetails(eventDay)"
+                          [outlined]="true"
+                          [raised]="true"
+                          label="Details"
+                          severity="primary"
+                          icon="pi pi-fw pi-info-circle"
+                        ></p-button>
+                      </div>
+                    </td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                  <tr>
+                    <td colspan="8">No data found.</td>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="summary">
+                  <div class="flex align-items-center justify-content-between">
+                    Total Number of Events:
+                    {{ eventDays ? eventDays.length : 0 }}
+                  </div>
+                </ng-template>
+              </p-table>
+            </ng-template>
+          </p-panel>
+        </div>
+        <div class="col-12 xl:col-3">
+          <p-panel header="Groups" [toggleable]="true"></p-panel>
+        </div>
+        <div class="col-12 xl:col-3">
+          <p-panel header="Volunteers" [toggleable]="true"></p-panel>
+        </div>
+      </div>
+    </p-panel>
+  </div>
+</div>
+
+<!-- Dialog to Add Event Day to Event -->
+<p-dialog
+  header="Add Event Day Form"
+  [(visible)]="addEventDayDialog"
+  [modal]="true"
+  [style]="{ width: '50vw' }"
+  [draggable]="false"
+  [resizable]="false"
+>
+  <div class="flex justify-content-center">
+    <form [formGroup]="addEventDayForm" (ngSubmit)="onSubmit(addEventDayForm)">
+      <div class="flex justify-content-center">
+        <p-card [style]="{ width: '500px' }">
+          <ng-template pTemplate="content">
+            <div class="flex flex-column">
+              <div class="col-12">
+                <label for="eventDayDate">Event Day</label>
+                <p-calendar
+                  [inline]="true"
+                  [showIcon]="true"
+                  icon="pi pi-fw pi-calendar-plus"
+                  styleClass="text-base text-color focus:border-primary w-full"
+                  inputId="eventDayDate"
+                  name="eventDayDate"
+                  dataType="string"
+                  formControlName="eventDayDate"
+                ></p-calendar>
+              </div>
+              <div class="col-12">
+                <div class="field-checkbox">
+                  <p-checkbox
+                    formControlName="eventDayIsActive"
+                    [binary]="true"
+                    inputId="eventDayIsActive"
+                    name="eventDayIsActive"
+                  ></p-checkbox>
+                  <label for="eventDayIsActive">Event Day is Active?</label>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="footer">
+            <div class="flex justify-content-around">
+              <p-button
+                label="Save"
+                icon="pi pi-fw pi-save"
+                [outlined]="true"
+                [raised]="true"
+                severity="success"
+                type="submit"
+              ></p-button>
+              <p-button
+                label="Cancel"
+                icon="pi pi-fw pi-times"
+                [outlined]="true"
+                [raised]="true"
+                severity="warning"
+                (onClick)="closeAddEventDay()"
+              ></p-button>
+            </div>
+          </ng-template>
+        </p-card>
+      </div>
+    </form>
+  </div>
+</p-dialog>
